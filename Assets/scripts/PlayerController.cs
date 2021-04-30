@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             salto = false;
             gameObject.GetComponent<Transform>().transform.position = posicion;
-
+            this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
 
         if (collision.gameObject.CompareTag("spawn") && inicio)
