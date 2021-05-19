@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
 
             salto = false;
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 300f));
-
         }
 
 
@@ -51,6 +50,13 @@ public class PlayerController : MonoBehaviour
          if(collision.transform.tag == "piso")
         {
             salto = true;
+        }
+
+        if (collision.transform.tag == "daño")
+        {
+            salto = false;
+            gameObject.GetComponent<Transform>().transform.position = posicion;
+            this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
     }
 
