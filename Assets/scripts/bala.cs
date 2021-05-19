@@ -8,6 +8,7 @@ public class bala : MonoBehaviour
     private Rigidbody2D rig;
     public float speed;
 
+
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
@@ -17,17 +18,21 @@ public class bala : MonoBehaviour
     void Update()
     {
         rig.velocity = transform.right * speed * Time.deltaTime;
+        Destroy(gameObject, 2f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        Destroy(gameObject, 0f);
+        if(collision.gameObject.tag != "Untagged")
+        {
+            Destroy(gameObject, 0f);
+        }
+       
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    /*private void OnCollisionEnter2D(Collision2D collision)
     {
 
         Destroy(gameObject, 0f);
-    }
+    }*/
 }

@@ -13,6 +13,9 @@ public class EnemiShot : MonoBehaviour
     public GameObject bala;
     private float tiempo;
 
+    public bool disparar;
+    public bool moverse;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,42 +29,61 @@ public class EnemiShot : MonoBehaviour
     {
         //movimiento
 
-        if(Vector2.Distance(transform.position , player_pos.position) > dis_frenado)
+        if (moverse)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player_pos.position, speed * Time.deltaTime);
+
+            if (Vector2.Distance(transform.position, player_pos.position) > dis_frenado)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player_pos.position, speed * Time.deltaTime);
+            }
+
+            if (Vector2.Distance(transform.position, player_pos.position) < dis_retraso)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player_pos.position, -speed * Time.deltaTime);
+            }
+
+            if (Vector2.Distance(transform.position, player_pos.position) < dis_frenado && Vector2.Distance(transform.position, player_pos.position) > dis_retraso)
+            {
+                transform.position = transform.position;
+            }
+
+            //flip
+
+
+            if (player_pos.position.x > this.transform.position.x)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+                //this.transform.localScale = new Vector2(0.5f , 0.5f);
+            }
+            else
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                // this.transform.localScale = new Vector2(-0.5f, 0.5f);
+            }
         }
 
-        if (Vector2.Distance(transform.position, player_pos.position) < dis_retraso)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player_pos.position, -speed * Time.deltaTime);
-        }
 
-        if (Vector2.Distance(transform.position, player_pos.position) < dis_frenado && Vector2.Distance(transform.position, player_pos.position) > dis_retraso)
+        if (disparar)
         {
-            transform.position = transform.position;
-        }
-        
-        //flip
 
-        if (player_pos.position.x > this.transform.position.x)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-            //this.transform.localScale = new Vector2(0.5f , 0.5f);
-        }
-        else
-        {
-            transform.eulerAngles = new Vector3(0, 180, 0);
-           // this.transform.localScale = new Vector2(-0.5f, 0.5f);
-        }
+            tiempo += Time.deltaTime;
+            if (tiempo >= 2)
+            {
+                Instantiate(bala, punto_instancia.position, punto_instancia.rotation);
+                tiempo = 0;
+            }
 
-        //disparo
+        }
+    }
 
-        tiempo += Time.deltaTime;
-        if (tiempo >= 2)
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
         {
-            Instantiate(bala,punto_instancia.position, punto_instancia.rotation);
-            tiempo = 0;
+            //Debug.Log("pisadooooooooooooo");
+            Destroy(gameObject, 0f);
         }
 
     }
+
 }

@@ -7,27 +7,62 @@ public class PatrullarPlataforma : MonoBehaviour
     private Rigidbody2D rig;
     public float speed;
 
+    public Transform PuntoA;
+    public Transform PuntoB;
+
+    private bool moveToA = false;
+    private bool moveToB = false;
+
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
+        moveToA = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rig.velocity = new Vector2(speed, rig.velocity.y);
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if(other.gameObject.tag == "piso")
+        if (moveToA)
         {
-            speed *= -1;
-            this.transform.localScale = new Vector2(this.transform.localScale.x * -1, this.transform.localScale.y);
+
+            transform.eulerAngles = new Vector3(0, 180, 0);
+
+            rig.transform.position = Vector2.MoveTowards(transform.position, PuntoA.position, speed * Time.deltaTime);
+
+            if(transform.position.x == PuntoA.position.x)
+            {
+                moveToA = false;
+                moveToB = true;
+            }
+
         }
-      
+
+        if (moveToB)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            rig.transform.position = Vector2.MoveTowards(transform.position, PuntoB.position, speed * Time.deltaTime);
+
+            if (transform.position.x == PuntoB.position.x)
+            {
+                moveToB = false;
+                moveToA = true;
+            }
+
+        }
+
 
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            //Debug.Log("pisadooooooooooooo");
+            Destroy(gameObject, 0f);
+        }
+
+    }
+
+
 
 }
