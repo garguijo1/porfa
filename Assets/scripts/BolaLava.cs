@@ -43,11 +43,6 @@ public class BolaLava : MonoBehaviour
 
         rig.velocity = transform.up * speed * Time.deltaTime;
 
-
-
-        
-
-
     }
 
 }
