@@ -6,7 +6,11 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     //public Text conteo;
-   // public Text win;
+    // public Text win;
+
+    public float fuerzaDesplazamiento;
+    public float fuerzaSalto;
+
     private int punto;
     private Vector3 posicion;
 
@@ -26,20 +30,20 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey("left"))
         {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-250f * Time.deltaTime, 0));
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-fuerzaDesplazamiento * Time.deltaTime, 0));
 
         }
 
         if (Input.GetKey("right"))
         {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(250f * Time.deltaTime, 0));
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(fuerzaDesplazamiento * Time.deltaTime, 0));
         }
 
         if (Input.GetKeyDown("up") && salto )
         {
 
             salto = false;
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 300f));
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, fuerzaSalto));
         }
 
 

@@ -59,6 +59,7 @@ public class PatrullarPlataforma : MonoBehaviour
         {
             //Debug.Log("pisadooooooooooooo");
             Destroy(gameObject, 0f);
+            collision.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 200f));
         }
 
     }
