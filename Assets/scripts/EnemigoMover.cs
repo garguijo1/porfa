@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemigoNadar : MonoBehaviour
+public class EnemigoMover : MonoBehaviour
 {
     public GameObject[] puntos;
     int random;
